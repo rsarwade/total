@@ -19,3 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::post('user-registration', 'RegisterController@doRegister');
+
+Route::post('verify-otp', 'RegisterController@verifyOTP');
+
+Route::post('login', 'LoginController@doLogin');
