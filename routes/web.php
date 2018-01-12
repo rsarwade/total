@@ -19,3 +19,5 @@ Route::get('/', function () {
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
+
+#Route::get('/api/user-registration', 'RegisterController@doRegister');
