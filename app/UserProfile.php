@@ -6,5 +6,5 @@
   
   
   class UserProfile extends Model {
-  
+  	
   }

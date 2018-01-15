@@ -3,6 +3,7 @@
 	
   use Hash;
 	use App\User;
+	use App\UserProfile;
 	use Illuminate\Support\Facades\Validator;
 	use Illuminate\Http\Request;
 	use Illuminate\Routing\Controller as BaseController;
@@ -17,14 +18,15 @@
 			
 			$error 			= false;
 			$err_arr		= array();
-			$post_data 	= $request->all();
+			$post_data 		= $request->json()->all();
 			$action 		= $post_data['action'];
-			$name				= $post_data['username'];
+			$name			= $post_data['username'];
 			$password		= 'password';
-			$social_id 	= $post_data['socialid'];
+			$social_type 	= $post_data['social_type'];
+			$social_id 		= $post_data['socialid'];
 			$email 			= $post_data['emailid'];
 			$mobile 		= $post_data['mobilenumber'];
-			$device_id 	= $post_data['deviceid'];
+			$device_id 		= $post_data['deviceid'];
 			
 			$user = User::where('email',  $email)->count();
 			if($user > 0) {
@@ -35,6 +37,21 @@
 			if($user > 0) {
 				$error = true;
 				$err_arr[] = 'Mobile Number '.$mobile. ' already exists.'; 
+			}
+
+			if(!isset($post_data['country_id']) || empty($post_data['country_id'])){
+				$error = true;
+				$err_arr[] = 'Country is empty';
+			}
+
+			if(!isset($post_data['state_id']) || empty($post_data['state_id'])){
+				$error = true;
+				$err_arr[] = 'State is empty';
+			}
+
+			if(!isset($post_data['city_id']) || empty($post_data['city_id'])){
+				$error = true;
+				$err_arr[] = 'City is empty';
 			}
 
 			if(!$error) {
@@ -49,6 +66,17 @@
 				if($user->save()) {
 					// call sms service here
 					// $otp =
+					$userprofile = new UserProfile();
+					$userprofile->user_id = $user->id;
+					$userprofile->social_type = $social_type;
+					$userprofile->social_id = $social_id;
+					$userprofile->country_id = $post_data['country_id'];
+					$userprofile->state_id = $post_data['state_id'];
+					$userprofile->city_id = $post_data['city_id'];
+					$userprofile->device_id = $post_data['device_id'];
+					$userprofile->device_agent = $post_data['device_agent'];
+					$userprofile->save();
+
 					$otp = '123456';
 					return response()->json(['statusKey' => "0", "statusMessage" => "success", 'result' => ["otp" => $otp]], 201);
 				}

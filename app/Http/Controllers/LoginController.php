@@ -18,7 +18,7 @@
 			);
 			if(Auth::attempt($credentials)) {
 				$user_arr = array(
-					"userid" 			=> Auth::id(),
+					"user_id" 			=> Auth::id(),
 					"name"				=> Auth::user()->name,
 					"emailid"			=> Auth::user()->email,
 					"mobilenumber"=> Auth::user()->mobile

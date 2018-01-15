@@ -23,3 +23,5 @@ Route::post('user-registration', 'RegisterController@doRegister');
 Route::post('verify-otp', 'RegisterController@verifyOTP');
 
 Route::post('login', 'LoginController@doLogin');
+
+Route::post('update-profile', 'ProfileController@updateProfile');
