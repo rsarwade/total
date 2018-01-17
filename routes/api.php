@@ -25,3 +25,5 @@ Route::post('verify-otp', 'RegisterController@verifyOTP');
 Route::post('login', 'LoginController@doLogin');
 
 Route::post('update-profile', 'ProfileController@updateProfile');
+
+Route::post('articles', 'ArticleController@ws_articles');
