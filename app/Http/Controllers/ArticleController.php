@@ -37,4 +37,5 @@ class ArticleController extends BaseController {
 
 		return response()->json(['statusKey' => "0", "statusMessage" => "success", 'result' => $articlesArr,'count'=> $articlecount], 201);
 	}
+	
 }
